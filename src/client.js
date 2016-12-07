@@ -10,8 +10,18 @@ import getRoutes from './routes';
 import { history } from './services';
 import configureStore from './store/configureStore';
 import config from './config';
+import * as firebase from 'firebase';
 
 GoogleAnalytics.initialize(config.app.googleAnalytics.appId);
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyDnSQdro-sLZa3ftteaJxnUWG_NF0jVv2Q',
+  authDomain: 'chat-sandbox-88b42.firebaseapp.com',
+  databaseURL: 'https://chat-sandbox-88b42.firebaseio.com',
+  storageBucket: 'chat-sandbox-88b42.appspot.com',
+  messagingSenderId: '486045074886'
+};
+firebase.initializeApp(firebaseConfig);
 
 async function renderClient() {
   const persistConfig = {
