@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Router, RouterContext, applyRouterMiddleware } from 'react-router';
 import GoogleAnalytics from 'react-ga';
 import { useScroll } from 'react-router-scroll';
-import DevTools from '../DevTools/DevTools';
+// import DevTools from '../DevTools/DevTools';
 
 export default class Root extends Component {
   constructor(props) {
@@ -35,7 +35,7 @@ export default class Root extends Component {
               render={applyRouterMiddleware(useScroll())}
             />
             }
-          <DevTools />
+          {/*<DevTools />*/}
         </div>
       </Provider>
     );
