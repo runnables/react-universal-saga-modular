@@ -11,10 +11,9 @@ export default function configureStore(history, initialState) {
     rootReducer,
     initialState,
     compose(
-      applyMiddleware(
-        sagaMiddleware,
-        createLogger()
-      ),
+      __CLIENT__ ?
+        applyMiddleware(sagaMiddleware, createLogger()) :
+        applyMiddleware(sagaMiddleware),
       DevTools.instrument()
     )
   );
