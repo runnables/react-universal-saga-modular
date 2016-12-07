@@ -4,5 +4,7 @@ dist/
 *.iml
 webpack-assets.json
 webpack-stats.json
-npm-debug.log
-yarn.lock
+npm-debug.log*
+client-secret.json
+yarn*
+.happypack
