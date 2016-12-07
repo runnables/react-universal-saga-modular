@@ -28,7 +28,7 @@ export const errorMessage = (state = null, action) => {
 // Updates the pagination data for different actions.
 export const pagination = combineReducers({
   starredByUser: paginate({
-    mapActionToKey: action => action.login,
+    mapActionToKey: (action) => action.login,
     types: [
       ActionTypes.STARRED.REQUEST,
       ActionTypes.STARRED.SUCCESS,
@@ -36,7 +36,7 @@ export const pagination = combineReducers({
     ]
   }),
   stargazersByRepo: paginate({
-    mapActionToKey: action => action.fullName,
+    mapActionToKey: (action) => action.fullName,
     types: [
       ActionTypes.STARGAZERS.REQUEST,
       ActionTypes.STARGAZERS.SUCCESS,

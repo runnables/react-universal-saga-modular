@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { viewActions } from 'modules/github/actions';
@@ -75,7 +76,7 @@ function mapStateToProps(state) {
 
   const fullName = `${login}/${name}`;
   const stargazersPagination = stargazersByRepo[fullName] || { ids: [] };
-  const stargazers = stargazersPagination.ids.map(id => users[id]);
+  const stargazers = _.map(stargazersPagination.ids, (id) => users[id]);
 
   return {
     fullName,

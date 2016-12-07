@@ -1,4 +1,5 @@
 import { fork, join } from 'redux-saga/effects';
+import _ from 'lodash';
 
 // IMPORT ALL SAGA WATCHERS
 import {
@@ -12,9 +13,9 @@ import {
 } from './github/sagas';
 
 // CUSTOM METHOD FOR USAGE AT server.js TO RUN SAGAS ON SERVER SIDE (e.g. fetch data)
-export const waitAll = sagas => function* genTasks() {
-  const tasks = yield sagas.map(([saga, ...params]) => fork(saga, ...params));
-  yield tasks.map(join);
+export const waitAll = (sagas) => function* genTasks() {
+  const tasks = yield _.map(sagas, ([saga, ...params]) => fork(saga, ...params));
+  yield _.map(tasks, join);
 };
 
 // CONSOLIDATE AND EXPORT ALL SAGAS

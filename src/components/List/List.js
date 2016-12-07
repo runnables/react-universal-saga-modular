@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 
 export default class List extends Component {
   renderLoadMore() {
@@ -28,7 +29,7 @@ export default class List extends Component {
 
     return (
       <div>
-        {items.map(renderItem)}
+        {_.map(items, renderItem)}
         {pageCount > 0 && !isLastPage && this.renderLoadMore()}
       </div>
     );

@@ -1,5 +1,6 @@
 import zip from 'lodash/zip';
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { viewActions } from 'modules/github/actions';
@@ -83,8 +84,8 @@ function mapStateToProps(state) {
   } = state;
 
   const starredPagination = starredByUser[login] || { ids: [] };
-  const starredRepos = starredPagination.ids.map(id => repos[id]);
-  const starredRepoOwners = starredRepos.map(repo => users[repo.owner]);
+  const starredRepos = _.map(starredPagination.ids, (id) => repos[id]);
+  const starredRepoOwners = _.map(starredRepos, (repo) => users[repo.owner]);
 
   return {
     login,

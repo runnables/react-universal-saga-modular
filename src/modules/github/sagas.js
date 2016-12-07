@@ -1,5 +1,6 @@
 /* eslint-disable no-constant-condition */
 import { take, put, call, fork, select } from 'redux-saga/effects';
+import _ from 'lodash';
 import { api } from 'services';
 import * as actions from './actions';
 
@@ -10,8 +11,8 @@ const { user, repo, starred, stargazers } = actions.sagaActions;
 
 // url for first page
 // urls for next pages will be extracted from the successive loadMore* requests
-const firstPageStarredUrl = login => `users/${login}/starred`;
-const firstPageStargazersUrl = fullName => `repos/${fullName}/stargazers`;
+const firstPageStarredUrl = (login) => `users/${login}/starred`;
+const firstPageStargazersUrl = (fullName) => `repos/${fullName}/stargazers`;
 
 
 /**
@@ -42,7 +43,7 @@ export const fetchStargazers = fetchEntity.bind(null, stargazers, api.fetchStarg
 // load user unless it is cached
 export function* loadUser(login, requiredFields) {
   const userObj = yield select(getUser, login);
-  if (!userObj || requiredFields.some(key => !userObj.hasOwnProperty(key))) {
+  if (!userObj || _.some(requiredFields, (key) => !userObj.hasOwnProperty(key))) {
     yield call(fetchUser, login);
   }
 }
@@ -50,7 +51,7 @@ export function* loadUser(login, requiredFields) {
 // load repo unless it is cached
 function* loadRepo(fullName, requiredFields) {
   const repoObj = yield select(getRepo, fullName);
-  if (!repoObj || requiredFields.some(key => !repoObj.hasOwnProperty(key))) {
+  if (!repoObj || _.some(requiredFields, (key) => !repoObj.hasOwnProperty(key))) {
     yield call(fetchRepo, fullName);
   }
 }

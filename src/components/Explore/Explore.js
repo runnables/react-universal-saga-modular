@@ -42,7 +42,7 @@ export default class Explore extends Component {
         <p>Type a username or repo full name and hit Go!: </p>
         <input size="45" ref={(c) => { this.input = c; }} defaultValue={this.props.value} onKeyUp={this.handleKeyUp} />
         <button type="button" className="btn btn-primary" onClick={this.handleGoClick}>Go!</button>
-        <p>Code on <a href={GITHUB_REPO} target="_blank" rel='noopener noreferrer'>Github</a>.</p>
+        <p>Code on <a href={GITHUB_REPO} target="_blank" rel="noopener noreferrer">Github</a>.</p>
         <p>Move the DevTools with Ctrl+W or hide them with Ctrl+H.</p>
       </div>
     );
