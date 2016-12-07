@@ -1,3 +1,6 @@
 webpack/*
 karma.conf.js
 tests.webpack.js
+src/config.js
+src/server.js
+src/services/api/index.js
