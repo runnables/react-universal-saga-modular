@@ -11,7 +11,7 @@ export default function paginate({ types, mapActionToKey }) {
   if (!_.every(types, (t) => _.isString(t))) {
     throw new Error('Expected types to be strings.');
   }
-  if (_.isFunction(mapActionToKey)) {
+  if (!_.isFunction(mapActionToKey)) {
     throw new Error('Expected mapActionToKey to be a function.');
   }
 
@@ -50,7 +50,7 @@ export default function paginate({ types, mapActionToKey }) {
       case successType:
       case failureType: {
         const key = mapActionToKey(action);
-        if (_.isString(key)) {
+        if (!_.isString(key)) {
           throw new Error('Expected key to be a string.');
         }
         return merge({}, state, {
