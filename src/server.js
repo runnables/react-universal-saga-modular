@@ -20,16 +20,6 @@ import Root from './containers/Root/Root';
 const pretty = new PrettyError();
 const app = new Express();
 const server = new http.Server(app);
-import * as firebase from 'firebase';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyDnSQdro-sLZa3ftteaJxnUWG_NF0jVv2Q',
-  authDomain: 'chat-sandbox-88b42.firebaseapp.com',
-  databaseURL: 'https://chat-sandbox-88b42.firebaseio.com',
-  storageBucket: 'chat-sandbox-88b42.appspot.com',
-  messagingSenderId: '486045074886'
-};
-firebase.initializeApp(firebaseConfig);
 
 // disable `X-Powered-By` HTTP header
 app.disable('x-powered-by');

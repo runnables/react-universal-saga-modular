@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Explore } from 'components';
@@ -7,6 +8,7 @@ import {
   updateRouterState,
   resetErrorMessage
 } from 'modules/common/actions';
+import { firebaseMessagesRef, firebaseAuth, firebaseAuthProvider } from 'services/firebase';
 
 import styles from './App.scss'; // eslint-disable-line
 
@@ -14,6 +16,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      items: []
+    };
+    this.items = [];
   }
 
   componentWillMount() {
@@ -21,6 +27,9 @@ class App extends Component {
       pathname: this.props.location.pathname,
       params: this.props.params
     });
+    this.messagesRef = firebaseMessagesRef;
+    this.auth = firebaseAuth;
+    this.auth.onAuthStateChanged((user) => this.onAuthStateChanged(user));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -35,8 +44,34 @@ class App extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.messagesRef.off();
+  }
+
+  onAuthStateChanged(user) {
+    this.setState({ user });
+    if (user) {
+      this.messagesRef.off();
+      this.messagesRef.limitToLast(12).on('child_added', (data) => this.setItems(data));
+      this.messagesRef.limitToLast(12).on('child_changed', (data) => this.setItems(data));
+    }
+  }
+
+  setItems(dataSnapshot) {
+    this.items.push(dataSnapshot.val());
+    this.setState({
+      items: this.items
+    });
+  }
+
   handleDismissClick(e) {
     this.props.resetErrorMessage();
+    e.preventDefault();
+  }
+
+  handleSignInClick(e) {
+    const provider = new firebaseAuthProvider.GoogleAuthProvider();
+    this.auth.signInWithPopup(provider);
     e.preventDefault();
   }
 
@@ -44,14 +79,27 @@ class App extends Component {
     this.props.navigate(`/${nextValue}`);
   }
 
+  renderMessages() {
+    return _.map(this.state.items, (message, id) => (
+      <div key={id}>
+        <img src={message.photoUrl} className={styles.profile} />
+        <div><b>{message.name}</b></div>
+        <div>{message.text}</div>
+      </div>
+    ));
+  }
+
   render() {
     const { children, inputValue } = this.props;
+    console.log('firebaseItems:', this.state.items);
     return (
       <div className={styles.app}>
         <Helmet
           title="React Universal Saga Modular"
           meta={[{ property: 'og:site_name', content: 'React Universal Saga Modular' }]}
         />
+        <div onClick={(e) => this.handleSignInClick(e)} style={{ cursor: 'pointer' }}>Sign in</div>
+        {this.renderMessages()}
         <Explore value={inputValue} onChange={this.handleChange} />
         <div className={styles.content}>
           {children}
