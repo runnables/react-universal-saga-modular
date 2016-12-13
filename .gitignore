@@ -6,5 +6,6 @@ webpack-assets.json
 webpack-stats.json
 npm-debug.log*
 client-secret.json
+secret.json
 yarn*
 .happypack

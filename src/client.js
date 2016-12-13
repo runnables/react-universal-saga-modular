@@ -7,12 +7,13 @@ import { getStoredState, createPersistor } from 'redux-persist';
 import Root from './containers/Root/Root';
 import rootSaga from './modules/rootSaga';
 import getRoutes from './routes';
-import { history } from './services';
+import { history, runSentry } from './services';
 import configureStore from './store/configureStore';
 import config from './config';
 import * as firebase from 'firebase';
 
 GoogleAnalytics.initialize(config.app.googleAnalytics.appId);
+runSentry();
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDnSQdro-sLZa3ftteaJxnUWG_NF0jVv2Q',
